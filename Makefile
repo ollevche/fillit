@@ -33,7 +33,7 @@ $(LIB):
 
 clean:
 	make -C ./libft/ clean
-	rm -rf *.o
+	rm -rf $(OBJ)
 
 fclean: clean
 	make -C ./libft/ fclean
