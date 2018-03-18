@@ -10,33 +10,42 @@
 #                                                                              #
 #******************************************************************************#
 
-NAME = fillit
+NAME	=	fillit
 
-SRC = execute_algorithm.c fill_struct.c main.c set_tetriminos.c read_file.c
+FLAGS	=	-Wall -Werror -Wextra -I./headers
 
-OBJ = $(SRC:.c=.o)
+SRCDIR	=	./sources/
 
-LIB = ./libft/libft.a
+OBJDIR	=	./objects/
 
-FLAG = -Wall -Werror -Wextra
+LIBDIR	=	./libft-gnl/
+
+SRC		=	execute_algorithm.c fill_struct.c main.c set_tetriminos.c read_file.c
+
+OBJ		=	$(addprefix $(OBJDIR), $(SRC:.c=.o))
+
+LIB		=	libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIB)
-	gcc -o $(NAME) $(OBJ) $(FLAG) $(LIB)
+$(NAME): $(OBJDIR) $(OBJ) $(LIBDIR)$(LIB)
+	gcc -o $(NAME) $(OBJ) $(LIBDIR)$(LIB) $(FLAGS)
 
-$(OBJ): $(SRC)
-	gcc -c $(SRC)
+$(OBJ): $(OBJDIR)%.o : $(SRCDIR)%.c
+	gcc -o $@ -c $< $(FLAGS)
 
-$(LIB):
-	make -C ./libft/
+$(LIBDIR)$(LIB):
+	make -C $(LIBDIR)
+
+$(OBJDIR):
+	mkdir $(OBJDIR) 
 
 clean:
-	make -C ./libft/ clean
-	rm -rf $(OBJ)
+	make -C $(LIBDIR) clean
+	rm -rf $(OBJ) $(OBJDIR)
 
 fclean: clean
-	make -C ./libft/ fclean
+	make -C $(LIBDIR) fclean
 	rm -rf $(NAME)
 
 re: fclean $(NAME)

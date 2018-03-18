@@ -12,7 +12,8 @@
 
 #ifndef FILLIT_H
 # define FILLIT_H
-# include "libft/libft.h"
+
+# include "../libft-gnl/headers/libft.h"
 # include <fcntl.h>
 
 typedef struct	s_tetri
